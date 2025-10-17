@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>cmdesig — Demo v3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f; --card:#0f1720; --muted:#9aa3af; --accent:#00AEEF; --accent2:#9D00FF; --text:#e6eef6;
+    }
+    body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;}
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px 5%;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .logo{font-weight:700;color:var(--accent)}
+    main{padding:40px 5%}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+    h3{margin:0 0 10px 0}
+    p.small{color:var(--muted);font-size:14px}
+    button.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+    .row{display:flex;gap:10px;align-items:center}
+    input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+    textarea{min-height:90px}
+    .mini{font-size:13px;color:var(--muted)}
+    footer{padding:30px 5%;text-align:center;color:var(--muted)}
+    @media(max-width:1000px){.grid{grid-template-columns:1fr;}}
+    /* small UI helpers */
+    .lead-form{max-width:560px;margin:18px 0}
+    .product-preview{height:180px;border-radius:10px;padding:12px;background:rgba(0,0,0,0.25);overflow:auto}
+    .list{list-style:none;padding:0;margin:0}
+    .list li{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.03);font-size:14px}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:12px;margin-right:6px}
+    .success{color:#8ef3b5}
+    .error{color:#ff9b9b}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">cmdesig <span style="font-weight:400;font-size:12px;color:var(--muted)">— Demo v3</span></div>
+    <div class="mini">MVP interactivo • demos UI + leads → Supabase</div>
+  </header>
+
+  <main>
+    <section style="margin-bottom:28px">
+      <h2>Demostraciones rápidas</h2>
+      <p class="mini">Prueba las mini-apps y, si te interesa, enviá un lead para que lo guardemos en la base de datos.</p>
+    </section>
+
+    <div class="grid">
+      <!-- cmdTools: generador de landing simple -->
+      <div class="card">
+        <h3>cmdTools — Landing generator</h3>
+        <p class="small">Generá un título y subtítulo con un clic (simula IA). Copialo o añadí al lead.</p>
+        <div style="margin:12px 0">
+          <label class="mini">Sector</label>
+          <select id="ct-sector">
+            <option>Pymes</option>
+            <option>Tienda online</option>
+            <option>Consultor</option>
+            <option>Restaurante</option>
+          </select>
+        </div>
+        <div style="margin-bottom:10px">
+          <label class="mini">Palabra clave</label>
+          <input id="ct-key" placeholder="ej: pastelería artesanal" />
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <button class="btn" onclick="generateLanding()">Generar</button>
+          <button class="btn" onclick="copyLanding()">Copiar</button>
+        </div>
+
+        <div class="product-preview" id="ct-preview">
+          <h4 id="ct-title">Título de ejemplo</h4>
+          <p id="ct-sub">Subtítulo descriptivo que invita a la acción.</p>
+        </div>
+      </div>
+
+      <!-- cmdOS: mini CRM -->
+      <div class="card">
+        <h3>cmdOS — Mini CRM</h3>
+        <p class="small">Agregá clientes y revisá la lista (simula panel de gestión).</p>
+        <div style="margin:10px 0">
+          <input id="crm-name" placeholder="Nombre del cliente" />
+        </div>
+        <div style="margin-bottom:10px">
+          <input id="crm-email" placeholder="Email" />
+        </div>
+        <div class="row" style="margin-bottom:12px">
+          <button class="btn" onclick="addClient()">Agregar cliente</button>
+          <button class="btn" onclick="clearClients()">Limpiar</button>
+        </div>
+        <div style="margin-top:8px">
+          <strong class="mini">Clientes</strong>
+          <ul class="list" id="crm-list"></ul>
+        </div>
+      </div>
+
+      <!-- cmdChat: simulador de chat IA -->
+      <div class="card">
+        <h3>cmdChat — Simulador IA</h3>
+        <p class="small">Escribí una consulta y recibí una respuesta generada localmente (simula integración OpenAI).</p>
+        <div style="margin:8px 0">
+          <textarea id="chat-prompt" placeholder="Ej: 'Cómo optimizo mi ecommerce para más conversiones'"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" onclick="simulateChat()">Enviar</button>
+            <button class="btn" onclick="clearChat()">Borrar</button>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="product-preview" id="chat-area"><em class="mini">Respuestas aquí...</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lead form -->
+    <section style="margin-top:28px">
+      <h2>Dejá tu lead</h2>
+      <p class="mini">Mandanos tu contacto y una nota rápida. Guardamos esto en la tabla <code>leads</code> (Supabase) vía tu backend.</p>
+
+      <div class="lead-form card" style="margin:12px auto">
+        <div id="lead-msg" class="mini"></div>
+        <div style="margin-bottom:8px"><input id="lead-name" placeholder="Tu nombre" /></div>
+        <div style="margin-bottom:8px"><input id="lead-email" placeholder="Tu email" /></div>
+        <div style="margin-bottom:8px"><textarea id="lead-note" placeholder="Breve descripción (opcional)"></textarea></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="sendLead()">Enviar lead</button>
+          <button class="btn" onclick="prefillFromDemo()">Prefill desde demo</button>
+          <button class="btn" onclick="sendLeadViaFormSubmit()">Enviar (FormSubmit fallback)</button>
+        </div>
+        <p class="mini" style="margin-top:10px">Endpoint actual: <span id="api-url" class="mini"></span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 cmdesig — Demo de producto y sistema de leads. Backend: Node/Express → Supabase.
+  </footer>
+
+<script>
+  // EDITAR: apuntá a tu endpoint de leads (ej: https://tu-api.vercel.app/api/leads)
+  const API_LEADS_URL = '' ; // <--- coloca la URL pública de tu backend aquí (si la dejás vacía usa fallback FormSubmit)
+
+  document.getElementById('api-url').textContent = API_LEADS_URL || '[usar fallback FormSubmit]';
+
+  // --- cmdTools functions ---
+  function generateLanding(){
+    const sector = document.getElementById('ct-sector').value;
+    const key = (document.getElementById('ct-key').value || 'servicio').trim();
+    const title = `${capitalize(sector)} para ${capitalize(key)} que vende más`;
+    const sub = `Landing optimizada y lista para convertir clientes en ${key}. Despliega en minutos.`;
+    document.getElementById('ct-title').textContent = title;
+    document.getElementById('ct-sub').textContent = sub;
+  }
+  function copyLanding(){
+    const title = document.getElementById('ct-title').textContent;
+    const sub = document.getElementById('ct-sub').textContent;
+    navigator.clipboard?.writeText(`${title}\n\n${sub}`).then(()=>alert('Copiado al portapapeles ✅'));
+  }
+  function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+  // --- cmdOS (CRM) ---
+  const clients = [];
+  function addClient(){
+    const name = document.getElementById('crm-name').value.trim();
+    const email = document.getElementById('crm-email').value.trim();
+    if(!name || !email){ alert('Completá nombre y email'); return; }
+    clients.push({name,email,created_at:new Date().toISOString()});
+    renderClients();
+    document.getElementById('crm-name').value=''; document.getElementById('crm-email').value='';
+  }
+  function renderClients(){
+    const ul = document.getElementById('crm-list'); ul.innerHTML='';
+    clients.slice().reverse().forEach(c=>{
+      const li = document.createElement('li'); li.textContent = `${c.name} — ${c.email}`;
+      ul.appendChild(li);
+    });
+  }
+  function clearClients(){ clients.length=0; renderClients(); }
+
+  // --- cmdChat simulated IA ---
+  function simulateChat(){
+    const q = (document.getElementById('chat-prompt').value||'').trim();
+    if(!q){ alert('Escribí una consulta'); return; }
+    const area = document.getElementById('chat-area'); area.innerHTML = `<strong>Tu pregunta:</strong><div class="mini">${escapeHtml(q)}</div><hr/>`;
+    // Respuesta "simulada": snippet heurístico basado en palabras clave
+    const response = fakeAIResponse(q);
+    const div = document.createElement('div'); div.innerHTML = `<strong>cmdChat:</strong><div class="mini">${escapeHtml(response)}</div>`;
+    area.appendChild(div);
+  }
+  function clearChat(){ document.getElementById('chat-area').innerHTML = '<em class="mini">Respuestas aquí...</em>'; document.getElementById('chat-prompt').value=''; }
+  function fakeAIResponse(text){
+    const t = text.toLowerCase();
+    if(t.includes('ecommerce')||t.includes('tienda')) return 'Optimiza las fichas de producto, mejora velocidades y crea flujos de recuperación de carrito con emails y whatsapp.';
+    if(t.includes('conversion')||t.includes('vender')) return 'Prueba A/B en landing, CTA claro, testimonios y proceso de pago simplificado.';
+    return 'Empieza por mapear el funnel: adquisición → activación → retención. Luego automatiza la comunicación más valiosa.';
+  }
+  function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+  // --- Leads: enviar al backend (o fallback FormSubmit) ---
+  async function sendLead(){
+    const name = document.getElementById('lead-name').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
+    const note = document.getElementById('lead-note').value.trim();
+    const summary = `${document.getElementById('ct-title').textContent || ''}\n${document.getElementById('ct-sub').textContent || ''}`.trim();
+
+    if(!name || !email){ showLeadMsg('Completá nombre y email', 'error'); return; }
+    const payload = {
+      name, email, note, demo_summary: summary, metadata: {from: 'frontend-demo-v3', timestamp: new Date().toISOString()}
+    };
+
+    if(!API_LEADS_URL){
+      showLeadMsg('No hay endpoint configurado: usar fallback FormSubmit (botón)', 'error');
+      return;
+    }
+
+    try {
+      showLeadMsg('Enviando lead...', 'mini');
+      const res = await fetch(API_LEADS_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      showLeadMsg('Lead registrado ✅', 'success');
+      console.log('lead saved', data);
+      // limpiamos campos
+      document.getElementById('lead-name').value=''; document.getElementById('lead-email').value=''; document.getElementById('lead-note').value='';
+    } catch(err){
+      console.error(err);
+      showLeadMsg('Error al enviar lead. Revisá consola.','error');
+    }
+  }
+
+  // fallback: FormSubmit (sin backend propio)
+  function sendLeadViaFormSubmit(){
+    const name = encodeURIComponent(document.getElementById('lead-name').value.trim() || '');
+    const email = encodeURIComponent(document.getElementById('lead-email').value.trim() || '');
+    const note = encodeURIComponent(document.getElementById('lead-note').value.trim() || '');
+    if(!email){ showLeadMsg('Completá al menos el email para enviar por FormSubmit','error'); return; }
+    // Redirigimos a formsubmit (uso correo de ejemplo hola@cmdesig.com). Cambiá por tu mail.
+    const formUrl = `https://formsubmit.co/hola@cmdesig.com`;
+    // Abrimos una ventana POST-like: construct form and submit
+    const form = document.createElement('form');
+    form.method='POST'; form.action=formUrl; form.style.display='none';
+    const iName = document.createElement('input'); iName.name='name'; iName.value=decodeURIComponent(name);
+    const iEmail = document.createElement('input'); iEmail.name='email'; iEmail.value=decodeURIComponent(email);
+    const iMsg = document.createElement('input'); iMsg.name='message'; iMsg.value=decodeURIComponent(note);
+    form.appendChild(iName); form.appendChild(iEmail); form.appendChild(iMsg);
+    const hidden = document.createElement('input'); hidden.type='hidden'; hidden.name='_captcha'; hidden.value='false'; form.appendChild(hidden);
+    document.body.appendChild(form); form.submit(); document.body.removeChild(form);
+  }
+
+  function prefillFromDemo(){
+    // usa datos generados por demos
+    document.getElementById('lead-name').value = document.getElementById('ct-title').textContent.split(' ')[0] + ' Demo';
+    document.getElementById('lead-email').value = 'demo@cmdesig.test';
+    document.getElementById('lead-note').value = document.getElementById('ct-sub').textContent;
+    showLeadMsg('Prefill aplicado (demo).', 'mini');
+  }
+
+  function showLeadMsg(msg, kind='mini'){
+    const el = document.getElementById('lead-msg');
+    el.textContent = msg;
+    el.className = kind==='mini' ? 'mini' : kind==='success' ? 'success' : 'error';
+  }
+
+  // helper to console
+  console.info('Frontend demo v3 cargado. Si querés persistir leads: configura API_LEADS_URL en la parte superior del archivo.');
+
+</script>
+</body>
+</html>
