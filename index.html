@@ -1,306 +1,345 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CMDESIGN — Soluciones tecnológicas y diseño</title>
-  <meta name="description" content="CMDESIGN: desarrollo, automatización e IA para emprendedores y empresas. Productos: cmdTools, cmdOS, cmdChat." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0b0f14;
-      --card:#0f1720;
-      --muted:#98a0aa;
-      --accent-1:#00AEEF; /* cyan */
-      --accent-2:#00E08A; /* green */
-      --glass: rgba(255,255,255,0.04);
-      --white: #eef6ff;
-      --radius:14px;
-    }
-    [data-theme="light"]{
-      --bg:#f7fbff;
-      --card:#ffffff;
-      --muted:#4b5563;
-      --glass: rgba(10,14,20,0.03);
-      --white: #0b1220;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      background:linear-gradient(180deg,var(--bg),#071018 180%);
-      color:var(--white);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      transition:background .35s,color .35s;
-      line-height:1.45;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CMDESIGN — Tecnología, Diseño y Automatización</title>
+<meta name="description" content="CMDESIGN: diseño, desarrollo y automatización con IA. Lanzamientos rápidos, productos SaaS y soluciones a medida." />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1: #06090d;
+    --bg-2: #061827;
+    --neon-cyan: #00E5FF;
+    --neon-green: #00E08A;
+    --neon-magenta: #FF3BA8;
+    --muted: #9fb0bd;
+    --glass: rgba(255,255,255,0.04);
+    --glass-strong: rgba(255,255,255,0.06);
+    --card: rgba(255,255,255,0.03);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    color:#eaf6ff;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(0,229,255,0.06), transparent 6%),
+                radial-gradient(1000px 500px at 90% 80%, rgba(0,224,138,0.04), transparent 6%),
+                linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
 
-    /* Header */
-    header{
-      position:sticky; top:0; z-index:60;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.12));
-      padding:14px 6%;
-      display:flex; gap:12px; align-items:center; justify-content:space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.02);
-    }
-    [data-theme="light"] header{ background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.9)); border-bottom: 1px solid rgba(0,0,0,0.04); }
-    .left { display:flex; align-items:center; gap:14px; }
-    .brand { display:flex; gap:12px; align-items:center; }
-    .brand h1{ font-size:18px; margin:0; font-weight:800; letter-spacing:0.6px; color:var(--accent-1); }
-    nav{ display:flex; gap:14px; align-items:center;}
-    nav a{ color:var(--white); text-decoration:none; font-weight:600; font-size:14px; opacity:.9}
-    nav a:hover{ color:var(--accent-1) }
-    .actions{ display:flex; gap:10px; align-items:center }
-    .btn {
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      border:none; color:#041019; font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer;
-      box-shadow:0 6px 20px rgba(2,160,200,0.12);
-    }
-    .ghost{ background:transparent; border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; color:var(--white); cursor:pointer; }
+  /* Animated background waves */
+  .bg-anim{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  }
+  .orb{
+    position:absolute; filter:blur(60px); opacity:0.9; transform:translateZ(0);
+    mix-blend-mode: screen;
+    animation: float 12s ease-in-out infinite;
+  }
+  .orb.o1{ width:520px;height:520px; left:-10%; top:-8%; background:radial-gradient(circle, rgba(0,229,255,0.18), transparent 40%); animation-duration:18s; }
+  .orb.o2{ width:420px;height:420px; right:-6%; bottom:-10%; background:radial-gradient(circle, rgba(0,224,138,0.12), transparent 40%); animation-duration:14s; animation-delay:2s;}
+  .orb.o3{ width:280px;height:280px; left:45%; top:10%; background:radial-gradient(circle, rgba(255,59,168,0.07), transparent 40%); animation-duration:20s; animation-delay:4s;}
+  @keyframes float { 0%{ transform:translateY(0) } 50%{ transform:translateY(28px) } 100%{ transform:translateY(0) } }
 
-    /* Layout */
-    main{ padding:40px 6%; display:block; max-width:1200px; margin:0 auto; }
+  /* Header */
+  header{
+    position:sticky; top:12px; z-index:40; margin:12px auto; width:calc(100% - 6%); max-width:1200px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:10px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .logo-mark{ width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:10px; background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+  .brand h1{ font-size:16px; margin:0; letter-spacing:0.6px; color:var(--neon-cyan); font-weight:700 }
+  nav{ display:flex; gap:16px; align-items:center }
+  nav a{ color:var(--muted); text-decoration:none; font-weight:600; font-size:14px; transition: color .18s, transform .18s; }
+  nav a:hover{ color:var(--neon-cyan); transform:translateY(-2px) }
+  .cta { display:flex; gap:10px; align-items:center }
+  .btn-primary{
+    background: linear-gradient(90deg,var(--neon-cyan),var(--neon-green));
+    color:#031018; border:none; border-radius:12px; padding:10px 14px; font-weight:700; cursor:pointer;
+    box-shadow: 0 10px 30px rgba(0,229,255,0.08);
+    transition: transform .16s, box-shadow .16s;
+  }
+  .btn-primary:hover{ transform:translateY(-4px); box-shadow:0 18px 48px rgba(0,229,255,0.12) }
 
-    /* Hero */
-    .hero{ display:grid; grid-template-columns:1fr 460px; gap:36px; align-items:center; padding:36px 0 6px; }
-    .hero h2{ font-size:40px; margin:0 0 10px; line-height:1.02; letter-spacing:-0.6px}
-    .hero p{ margin:0 0 18px; color:var(--muted); max-width:60ch }
-    .hero .cta-row{ display:flex; gap:12px; align-items:center }
-    .panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding:18px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,0.5);
-    }
-    [data-theme="light"] .panel{ box-shadow: 0 6px 18px rgba(10,14,20,0.06); }
+  /* Main layout */
+  main{ position:relative; z-index:10; max-width:1200px; margin:40px auto; padding:24px; }
 
-    /* Logo preview area */
-    .logo-preview { display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; padding:18px; }
-    .logo-sample { width:100%; display:flex; align-items:center; justify-content:center; height:300px; border-radius:12px; background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.12)); position:relative; }
-    [data-theme="light"] .logo-sample{ background: linear-gradient(180deg,#fff,#f6fbff) }
+  /* Hero */
+  .hero{ display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center; min-height:64vh; }
+  .hero .eyebrow{ color:var(--neon-green); font-weight:700; font-size:13px; letter-spacing:0.8px; margin-bottom:12px;}
+  .hero h2{ font-size:44px; margin:0 0 12px; line-height:1.02; letter-spacing:-0.6px; background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p{ color:var(--muted); margin:0 0 18px; max-width:60ch }
 
-    .logo-switcher{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:6px }
-    .logo-switcher button{ padding:8px 10px; border-radius:10px; border:none; background:var(--glass); color:var(--white); cursor:pointer }
-    [data-theme="light"] .logo-switcher button{ background: rgba(0,0,0,0.04); color:var(--muted); }
-    .logo-switcher button.active{ outline:3px solid rgba(0,0,0,0.06); transform:translateY(-3px); }
+  .hero .actions{ display:flex; gap:12px; align-items:center; }
+  .subtle{ color:var(--muted); font-size:14px }
 
-    /* Features */
-    .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:28px }
-    .card { background:var(--card); padding:18px; border-radius:12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
-    .small{ color:var(--muted); font-size:14px }
+  /* Right panel - logo + mock */
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:20px; padding:18px; box-shadow: 0 20px 60px rgba(1,6,10,0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+    position:relative; overflow:hidden;
+  }
+  .mock {
+    height:320px; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative;
+    background: linear-gradient(180deg, rgba(2,20,30,0.7), rgba(2,10,16,0.6));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+  .mock svg{ width:80%; height:auto; filter: drop-shadow(0 10px 30px rgba(0,229,255,0.06)); transform:translateY(-6px) }
 
-    /* Demo area */
-    .demo { margin-top:36px; display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap }
-    .demo .left { flex:1 1 480px }
-    .demo .right { width:320px; }
+  /* Glow lines */
+  .glow-line{ position:absolute; left:-10%; top:20%; width:140%; height:1px; background: linear-gradient(90deg, transparent, rgba(0,229,255,0.06), transparent); transform:skewX(-10deg); pointer-events:none; }
 
-    /* Testimonials */
-    .testimonials{ margin-top:36px; display:flex; gap:16px; overflow:auto; padding-bottom:8px }
-    .testimonial { min-width:260px; background:var(--card); padding:16px; border-radius:12px; }
+  /* Features grid */
+  .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:28px; }
+  .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow: 0 10px 40px rgba(2,20,30,0.6); transition: transform .22s, box-shadow .22s;}
+  .card:hover{ transform:translateY(-8px); box-shadow:0 22px 60px rgba(0,229,255,0.06); }
+  .card h4{ margin:0 0 8px }
+  .card p{ margin:0; color:var(--muted); font-size:14px }
 
-    /* Contact */
-    .contact-form { background:var(--card); padding:18px; border-radius:12px; margin-top:28px }
-    input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--white); margin-top:8px }
-    [data-theme="light"] input, [data-theme="light"] textarea { border:1px solid rgba(0,0,0,0.06); color:var(--muted) }
-    textarea{ min-height:110px }
+  /* Demo generator */
+  .demo { margin-top:30px; display:flex; gap:18px; align-items:flex-start }
+  .demo-left{ flex:1; }
+  .input, select, textarea{ width:100%; padding:12px;border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--neon-cyan); margin-top:8px; }
+  .demo-output{ margin-top:12px; padding:12px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); color:var(--muted) }
 
-    /* Footer */
-    footer{ padding:30px 6%; margin-top:40px; color:var(--muted); text-align:center; font-size:14px }
+  /* Testimonials carousel */
+  .testimonials{ margin-top:36px; display:flex; gap:16px; overflow:auto; padding-bottom:8px }
+  .testimonial{ min-width:260px; border-radius:12px; padding:16px; background:linear-gradient(180deg, rgba(0,10,15,0.6), rgba(0,0,0,0.35)); border:1px solid rgba(255,255,255,0.02) }
+  .testimonial strong{ display:block; margin-bottom:8px; color:var(--neon-cyan) }
+  .testimonial p{ margin:0; color:var(--muted) }
 
-    /* Responsive */
-    @media (max-width:1000px){
-      .hero{ grid-template-columns:1fr; }
-      .logo-sample{ height:220px }
-      .grid-3{ grid-template-columns:1fr; }
-      .demo{ flex-direction:column }
-    }
-  </style>
+  /* Contact */
+  .contact{ margin-top:34px; display:grid; grid-template-columns:1fr 360px; gap:18px }
+  .contact-form{ padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03) }
+
+  footer{ margin-top:40px; text-align:center; color:var(--muted); padding-bottom:60px }
+
+  /* small screens */
+  @media (max-width:980px){
+    .hero{ grid-template-columns:1fr; padding-bottom:6px }
+    .features{ grid-template-columns:1fr }
+    .contact{ grid-template-columns:1fr }
+  }
+
+  /* scroll animations */
+  .reveal{ opacity:0; transform: translateY(18px); transition:opacity .7s ease, transform .7s ease; will-change:opacity, transform; }
+  .reveal.visible{ opacity:1; transform: translateY(0); }
+
+  /* micro interactions */
+  .btn-glow{
+    border-radius:12px; padding:10px 12px; border:1px solid rgba(255,255,255,0.04);
+    background:linear-gradient(90deg, rgba(0,0,0,0.25), rgba(255,255,255,0.02));
+  }
+</style>
 </head>
-<body data-theme="dark">
+<body>
 
-  <header>
-    <div class="left">
-      <div class="brand" aria-hidden="true">
-        <!-- flat corporate mini mark -->
-        <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="0" y="0" width="64" height="64" rx="12" fill="#07131a"/>
-          <g transform="translate(8,8)">
-            <path d="M12 4C6 4 2 8 2 14C2 20 6 24 12 24" stroke="#00AEEF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M30 2L22 14L30 26" stroke="#00E08A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<div class="bg-anim" aria-hidden="true">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+</div>
+
+<header role="banner">
+  <div class="brand">
+    <div class="logo-mark" aria-hidden="true">
+      <!-- Tech neon mini mark SVG -->
+      <svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg1" x1="0" x2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset="1" stop-color="#00E08A"/></linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="12" fill="#071119"/>
+        <path d="M18 36C26 28 38 28 46 36" stroke="url(#lg1)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M36 18L44 36L36 54" stroke="url(#lg1)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h1>CMDESIGN</h1>
+  </div>
+
+  <nav role="navigation" aria-label="Main navigation">
+    <a href="#soluciones">Soluciones</a>
+    <a href="#productos">Productos</a>
+    <a href="#demo">Demo</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <div class="cta">
+    <button class="btn-glow" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Probar demo</button>
+    <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Comenzar proyecto</button>
+  </div>
+</header>
+
+<main role="main" aria-live="polite">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="reveal" id="hero-left">
+      <div class="eyebrow">Soluciones • Automatización • IA</div>
+      <h2 id="hero-title">Creamos tecnología que <span style="background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta)); -webkit-background-clip:text; -webkit-text-fill-color:transparent">vende, escala y emociona</span>.</h2>
+      <p>CMDESIGN combina diseño estratégico, desarrollo y automatizaciones con IA para lanzar productos digitales y MVP que generan resultados medibles.</p>
+      <div class="actions" style="margin-top:18px">
+        <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar demo</button>
+        <button class="btn-glow" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Ver micro-demo</button>
+      </div>
+
+      <div class="features reveal" style="margin-top:26px">
+        <div class="card" style="margin-bottom:14px">
+          <h4>Entrega rápida</h4>
+          <p class="small">MVPs listos para validar ideas y captar usuarios en semanas.</p>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:10px">
+          <div class="card" style="flex:1">
+            <h4>Escalabilidad</h4>
+            <p class="small">Arquitectura preparada para crecer con tu negocio.</p>
+          </div>
+          <div class="card" style="flex:1">
+            <h4>Integraciones IA</h4>
+            <p class="small">Asistentes, automatizaciones y análisis con modelos de lenguaje.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel reveal" id="hero-right" aria-hidden="true">
+      <div class="glow-line" aria-hidden="true"></div>
+      <div class="mock" id="logoMock" role="img" aria-label="Logo de CMDESIGN">
+        <!-- Full tech logo SVG (glowing) -->
+        <svg viewBox="0 0 360 260" width="92%" height="92%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="neonA" x1="0" x2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset="1" stop-color="#00E08A"/></linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="6" result="blur"/></filter>
+          </defs>
+          <rect width="100%" height="100%" fill="transparent"/>
+          <g transform="translate(40,20)">
+            <circle cx="80" cy="80" r="72" fill="#041018" stroke="url(#neonA)" stroke-width="2" opacity="0.65" />
+            <path d="M40 80 A50 50 0 1 0 140 80" stroke="url(#neonA)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.95" />
+            <path d="M100 36 L140 36 L140 124 L110 124 L110 86 L100 102 Z" fill="#021722" stroke="url(#neonA)" stroke-width="3" />
+          </g>
+          <g transform="translate(20,160)">
+            <text x="0" y="36" font-family="Poppins" font-weight="700" font-size="36" fill="#bff8ff" opacity="0.95">CMDESIGN</text>
           </g>
         </svg>
-        <h1>CMDESIGN</h1>
       </div>
-      <nav style="margin-left:14px" aria-label="Navegación principal">
-        <a href="#soluciones">Soluciones</a>
-        <a href="#productos">Productos</a>
-        <a href="#demo">Demo</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </div>
+    </aside>
+  </section>
 
-    <div class="actions">
-      <button class="ghost" id="themeToggle" aria-label="Cambiar tema">🌙</button>
-      <button class="btn" onclick="location.href='#contacto'">Comenzar proyecto</button>
-    </div>
-  </header>
+  <!-- SOLUCIONES -->
+  <section id="soluciones" class="reveal" aria-labelledby="solu">
+    <h3 id="solu">Qué hacemos</h3>
+    <p class="subtle">Desarrollo de productos, automatizaciones y servicios SaaS con foco en resultados.</p>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <h2 id="hero-title">Diseño, desarrollo y automatización que venden.</h2>
-        <p>En CMDESIGN construimos productos digitales y automatizaciones con diseño y estrategia. Creamos herramientas (cmdTools, cmdOS, cmdChat) que permiten a emprendedores y empresas ahorrar tiempo y aumentar ingresos.</p>
-        <div class="cta-row">
-          <button class="btn" onclick="location.href='#demo'">Probar demo</button>
-          <button class="ghost" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar demo en vivo</button>
+    <div class="features" style="margin-top:12px">
+      <div class="card reveal">
+        <h4>Desarrollo de productos</h4>
+        <p class="small">Desde idea hasta MVP, con UX, dev y despliegue continuo.</p>
+      </div>
+      <div class="card reveal">
+        <h4>Automatizaciones & Bots</h4>
+        <p class="small">Workflows que reducen tareas manuales y aumentan conversiones.</p>
+      </div>
+      <div class="card reveal">
+        <h4>Integraciones IA</h4>
+        <p class="small">Chatbots, asistentes y generación de contenido inteligente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section id="productos" class="reveal" style="margin-top:28px">
+    <h3>Productos</h3>
+    <p class="subtle">Herramientas que formarán el núcleo del ecosistema CMDESIGN.</p>
+
+    <div class="features" style="margin-top:12px">
+      <article class="card reveal">
+        <h4>cmdTools</h4>
+        <p class="small">Microherramientas para emprendedores: generador de landing, link manager y analítica.</p>
+      </article>
+      <article class="card reveal">
+        <h4>cmdOS</h4>
+        <p class="small">Panel de gestión con CRM, reportes y automatizaciones integradas.</p>
+      </article>
+      <article class="card reveal">
+        <h4>cmdChat</h4>
+        <p class="small">Asistente IA multicanal para atención y ventas (WhatsApp, Web).</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo" class="reveal" style="margin-top:28px">
+    <h3>Micro-demo: generador de landing</h3>
+    <p class="subtle">Probá el generador instantáneo — ideal para validar mensajes y CTA.</p>
+
+    <div class="demo">
+      <div class="demo-left card">
+        <label class="small">Sector</label>
+        <select id="demo-sector" class="input">
+          <option>Consultoría</option>
+          <option>Tienda online</option>
+          <option>Restaurante</option>
+          <option>Educación</option>
+        </select>
+
+        <label class="small" style="margin-top:8px">Palabra clave</label>
+        <input id="demo-key" class="input" placeholder="ej: pastelería artesanal" />
+
+        <div style="margin-top:10px; display:flex; gap:10px;">
+          <button class="btn-primary" onclick="generateDemo()">Generar</button>
+          <button class="btn-glow" onclick="copyDemo()">Copiar</button>
         </div>
 
-        <div class="grid-3" style="margin-top:24px;">
-          <div class="card">
-            <h4>Rápido al mercado</h4>
-            <p class="small">MVPs funcionales en semanas, no meses.</p>
-          </div>
-          <div class="card">
-            <h4>Diseño con propósito</h4>
-            <p class="small">UX que convierte y estética coherente con tu marca.</p>
-          </div>
-          <div class="card">
-            <h4>IA y automatización</h4>
-            <p class="small">Workflows que liberan tiempo y aumentan la productividad.</p>
-          </div>
+        <div class="demo-output" id="demo-output" aria-live="polite">
+          <strong id="demo-title-out">Título de ejemplo</strong>
+          <p id="demo-sub-out" class="small" style="margin-top:8px">Subtítulo descriptivo que invita a la acción.</p>
         </div>
       </div>
 
-      <!-- logo preview / panel -->
-      <aside class="panel logo-preview" aria-hidden="true">
-        <div style="width:100%">
-          <div class="logo-sample" id="logoCanvas">
-            <!-- We'll inject the chosen logo SVG here via JS -->
-          </div>
-
-          <div class="logo-switcher" role="tablist" aria-label="Selector de logo">
-            <button id="logoFlatBtn" class="active" role="tab" aria-selected="true">Versión Corporativa</button>
-            <button id="logoTechBtn" role="tab">Versión Tech</button>
-            <button id="logoCreativeBtn" role="tab">Versión Creativa</button>
-          </div>
-          <p class="small" style="text-align:center; margin-top:8px;">Usá el switch para ver el logo aplicado en contexto. Elegí la variante que mejor "vende".</p>
-        </div>
+      <aside class="card" style="width:320px">
+        <h4>Por qué funciona</h4>
+        <ul class="small" style="margin-top:10px">
+          <li>Mensajes claros que comunican valor.</li>
+          <li>CTAs optimizados para conversión.</li>
+          <li>Integración con captación de leads.</li>
+        </ul>
+        <div style="margin-top:14px"><button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar integración</button></div>
       </aside>
-    </section>
+    </div>
+  </section>
 
-    <!-- SOLUCIONES -->
-    <section id="soluciones" aria-labelledby="soluciones-title" style="margin-top:28px">
-      <h3 id="soluciones-title">Qué hacemos</h3>
-      <p class="small">Combinamos diseño, desarrollo y automatización para crear productos medibles y escalables.</p>
-      <div class="grid-3" style="margin-top:16px">
-        <div class="card">
-          <h4>Desarrollo a medida</h4>
-          <p class="small">Apps web, dashboards y plataformas integradas con tu ecosistema.</p>
-        </div>
-        <div class="card">
-          <h4>Productos SaaS</h4>
-          <p class="small">Microherramientas y paneles que tus clientes usarán a diario.</p>
-        </div>
-        <div class="card">
-          <h4>Automatizaciones & IA</h4>
-          <p class="small">Bots, workflows y asistentes inteligentes para ventas y soporte.</p>
-        </div>
+  <!-- TESTIMONIOS -->
+  <section class="reveal" style="margin-top:36px">
+    <h3>Testimonios</h3>
+    <div class="testimonials" aria-live="polite">
+      <div class="testimonial">
+        <strong>María R. — Fundadora</strong>
+        <p class="small">"CMDESIGN nos entregó una plataforma usable en 3 semanas. Conversiones +35%".</p>
       </div>
-    </section>
-
-    <!-- PRODUCTOS -->
-    <section id="productos" style="margin-top:28px">
-      <h3>Productos</h3>
-      <p class="small">Herramientas que ya forman parte del roadmap de CMDESIGN.</p>
-      <div class="grid-3" style="margin-top:12px">
-        <article class="card" aria-labelledby="p1">
-          <h4 id="p1">cmdTools</h4>
-          <p class="small">Suite de microherramientas: landing generator, analítica rápida y link manager.</p>
-        </article>
-        <article class="card" aria-labelledby="p2">
-          <h4 id="p2">cmdOS</h4>
-          <p class="small">Panel de gestión con CRM ligero, automatizaciones y reportes.</p>
-        </article>
-        <article class="card" aria-labelledby="p3">
-          <h4 id="p3">cmdChat</h4>
-          <p class="small">Asistente IA multicanal para atención y ventas (WhatsApp / Web).</p>
-        </article>
+      <div class="testimonial">
+        <strong>Ignacio P. — CEO</strong>
+        <p class="small">"La automatización vía cmdChat redujo tiempos de respuesta en 70%."</p>
       </div>
-    </section>
-
-    <!-- DEMO -->
-    <section id="demo" aria-labelledby="demo-title" style="margin-top:28px">
-      <h3 id="demo-title">Demo interactiva</h3>
-      <p class="small">Un micro-generador de landing (ejemplo de cmdTools). Generá un título y subtítulo en un clic.</p>
-
-      <div class="demo">
-        <div class="left card">
-          <label class="small">Sector</label>
-          <select id="demo-sector">
-            <option>Consultoría</option>
-            <option>Tienda online</option>
-            <option>Restaurante</option>
-            <option>Educación</option>
-          </select>
-
-          <label class="small" style="margin-top:8px">Palabra clave</label>
-          <input id="demo-key" placeholder="ej: pastelería artesanal" />
-
-          <div style="margin-top:10px; display:flex; gap:10px;">
-            <button class="btn" onclick="generateDemo()">Generar</button>
-            <button class="ghost" onclick="copyDemo()">Copiar</button>
-          </div>
-
-          <div style="margin-top:14px">
-            <div style="padding:12px; background:var(--glass); border-radius:10px">
-              <strong id="demo-title-out">Título de ejemplo</strong>
-              <p id="demo-sub-out" class="small" style="margin-top:8px">Subtítulo descriptivo que invita a la acción.</p>
-            </div>
-          </div>
-
-          <p class="small" style="margin-top:12px">Guardá este texto y podés usarlo en una landing real.</p>
-        </div>
-
-        <aside class="right">
-          <div class="card" style="padding:12px">
-            <strong>Beneficios rápidos</strong>
-            <ul class="small" style="margin-top:8px">
-              <li>Resultados rápidos: landing lista en minutos</li>
-              <li>Captura de leads integrada</li>
-              <li>Plantillas conversion-first</li>
-            </ul>
-            <div style="margin-top:12px"><button class="btn" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar integración</button></div>
-          </div>
-        </aside>
+      <div class="testimonial">
+        <strong>Lucas A. — Ecommerce</strong>
+        <p class="small">"Profesionales y rápidos. Diseño premium y código limpio."</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- TESTIMONIOS -->
-    <section aria-labelledby="testi" style="margin-top:28px">
-      <h3 id="testi">Testimonios</h3>
-      <div class="testimonials" aria-live="polite">
-        <div class="testimonial">
-          <strong>María R. — Fundadora</strong>
-          <p class="small">"Con CMDESIGN lanzamos una landing que aumentó conversiones 40% en el primer mes."</p>
-        </div>
-        <div class="testimonial">
-          <strong>Ignacio P. — CEO</strong>
-          <p class="small">"Automatizar ventas con cmdChat nos ahorró 20 horas por semana."</p>
-        </div>
-        <div class="testimonial">
-          <strong>Lucas A. — Ecommerce</strong>
-          <p class="small">"El equipo entregó un MVP funcional y elegante en 3 semanas."</p>
-        </div>
-      </div>
-    </section>
+  <!-- CONTACT -->
+  <section id="contacto" class="reveal" style="margin-top:34px">
+    <h3>Contacto</h3>
+    <p class="subtle">Dejanos tu contacto y te respondemos en 24–48h. También ofrecemos demos en vivo.</p>
 
-    <!-- CONTACTO -->
-    <section id="contacto" aria-labelledby="contacto-title" style="margin-top:28px">
-      <h3 id="contacto-title">Contacto</h3>
-      <p class="small">Dejanos tu contacto y te respondemos en 24–48h.</p>
-
+    <div class="contact">
       <form class="contact-form" action="https://formsubmit.co/hola@cmdesig.com" method="POST">
         <label class="small">Nombre</label>
         <input name="name" required placeholder="Tu nombre" />
@@ -308,141 +347,81 @@
         <input name="email" type="email" required placeholder="tu@correo.com" />
         <label class="small">Mensaje</label>
         <textarea name="message" placeholder="Contanos sobre tu proyecto"></textarea>
-        <div style="display:flex; gap:8px; margin-top:10px">
-          <button class="btn" type="submit">Enviar mensaje</button>
-          <button class="ghost" type="button" onclick="prefillDemo()">Prefill demo</button>
+        <div style="display:flex; gap:10px; margin-top:10px">
+          <button class="btn-primary" type="submit">Enviar mensaje</button>
+          <button class="btn-glow" type="button" onclick="prefillDemo()">Prefill demo</button>
         </div>
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_next" value="https://cmdesign8.github.io/CMDESIGN/#contacto" />
       </form>
-    </section>
-  </main>
+
+      <aside style="height:100%">
+        <div class="card" style="padding:18px">
+          <h4>¿Querés una demo en vivo?</h4>
+          <p class="small">Agendamos y te mostramos cómo cmdTools y cmdChat pueden integrarse a tu negocio.</p>
+          <div style="margin-top:10px"><button class="btn-glow" onclick="document.querySelector('input[name=name]').focus()">Agendar demo</button></div>
+        </div>
+      </aside>
+    </div>
+  </section>
 
   <footer>
-    © 2025 CMDESIGN — Diseño, desarrollo y automatización. • <a href="#" style="color:inherit; text-decoration:underline" onclick="location.href='#soluciones'">Trabajemos juntos</a>
+    © 2025 CMDESIGN — Diseño, desarrollo y automatización • Hecho con ❤️
   </footer>
+</main>
 
-  <script>
-    /* THEME */
-    const body = document.body;
-    const themeToggle = document.getElementById('themeToggle');
-    let theme = localStorage.getItem('cmd_theme') || 'dark';
-    setTheme(theme);
-    themeToggle.addEventListener('click', () => {
-      theme = (theme === 'dark') ? 'light' : 'dark';
-      setTheme(theme);
-      localStorage.setItem('cmd_theme', theme);
+<script>
+  // Intersection observer for reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) e.target.classList.add('visible');
     });
-    function setTheme(t){
-      theme = t;
-      body.setAttribute('data-theme', t);
-      themeToggle.textContent = (t === 'dark') ? '🌙' : '☀️';
-    }
+  }, { threshold: 0.18 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    /* LOGOS: three inline SVG variants */
-    const logoCanvas = document.getElementById('logoCanvas');
-    const btnFlat = document.getElementById('logoFlatBtn');
-    const btnTech = document.getElementById('logoTechBtn');
-    const btnCreative = document.getElementById('logoCreativeBtn');
+  // Demo generator
+  function generateDemo(){
+    const sector = document.getElementById('demo-sector').value || 'servicio';
+    const key = (document.getElementById('demo-key').value || 'tu negocio').trim();
+    const title = `${capitalize(sector)} para ${capitalize(key)} que convierte más`;
+    const sub = `Landing optimizada para captar clientes interesados en ${key}. Template listo para deploy.`;
+    document.getElementById('demo-title-out').textContent = title;
+    document.getElementById('demo-sub-out').textContent = sub;
+  }
+  function copyDemo(){
+    const t = document.getElementById('demo-title-out').textContent + "\n\n" + document.getElementById('demo-sub-out').textContent;
+    navigator.clipboard?.writeText(t).then(()=> alert('Texto copiado ✅'));
+  }
+  function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+  function prefillDemo(){
+    document.querySelector('input[name="name"]').value = 'Interesado CMDESIGN';
+    document.querySelector('input[name="email"]').value = 'demo@empresa.test';
+    document.querySelector('textarea[name="message"]').value = 'Quiero una demo y ver integración de cmdTools y cmdChat.';
+    document.querySelector('input[name="name"]').focus?.();
+  }
 
-    const svgFlat = `
-      <svg viewBox="0 0 360 260" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="CMDESIGN Corporativo">
-        <defs>
-          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00AEEF"/><stop offset="1" stop-color="#00E08A"/></linearGradient>
-        </defs>
-        <rect x="0" y="0" width="100%" height="100%" fill="transparent"/>
-        <g transform="translate(40,20)">
-          <circle cx="80" cy="80" r="72" fill="#07131a" opacity="0.75"/>
-          <path d="M45 80 A45 45 0 1 0 125 80" stroke="url(#g1)" stroke-width="16" stroke-linecap="round" fill="none"/>
-          <path d="M100 40 L145 40 L145 120 L118 120 L118 85 L100 100 Z" fill="url(#g1)" stroke="#022" stroke-width="4" />
-          <text x="10" y="200" font-family='Inter' font-weight="700' " font-size="36" fill="#071f28">CMDESIGN</text>
-        </g>
-      </svg>
-    `;
-
-    const svgTech = `
-      <svg viewBox="0 0 360 260" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="CMDESIGN Tech">
-        <defs>
-          <linearGradient id="neon" x1="0" x2="1"><stop offset="0" stop-color="#00F0FF"/><stop offset="1" stop-color="#00FFB2"/></linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="transparent"/>
-        <g transform="translate(40,20)" stroke="url(#neon)" stroke-width="4" stroke-linecap="round">
-          <path d="M40 80 A55 55 0 1 0 150 80" fill="none" opacity="0.06"/>
-          <path d="M40 80 A55 55 0 1 0 150 80" />
-          <path d="M100 36 L140 36 L140 124 L110 124 L110 86 L100 102 Z" fill="#042631" stroke="url(#neon)" stroke-width="3"/>
-        </g>
-        <g transform="translate(20,160)">
-          <text x="0" y="36" font-family='Inter' font-weight="700" font-size="34" fill="#07f0ff" opacity="0.95">CMDESIGN</text>
-        </g>
-      </svg>
-    `;
-
-    const svgCreative = `
-      <svg viewBox="0 0 360 260" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="CMDESIGN Creativo">
-        <defs>
-          <linearGradient id="c1" x1="0" x2="1"><stop offset="0" stop-color="#4BE0FF"/><stop offset="1" stop-color="#6BFF9D"/></linearGradient>
-          <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"></feTurbulence></filter>
-        </defs>
-        <rect width="100%" height="100%" fill="transparent"/>
-        <g transform="translate(10,10)">
-          <path d="M30 110 C60 10, 200 10, 220 110 C200 140, 100 160, 60 130 Z" fill="url(#c1)" opacity="0.95" />
-          <g transform="translate(70,30)">
-            <path d="M12 20 A50 50 0 1 0 120 20" fill="#052028" opacity="0.85"/>
-            <path d="M70 10 L110 10 L110 80 L85 80 L85 50 L70 65 Z" fill="#052028"/>
-            <path d="M70 10 L110 10 L110 80 L85 80 L85 50 L70 65 Z" fill="url(#c1)" opacity="0.9"/>
-          </g>
-        </g>
-        <g transform="translate(20,180)">
-          <text x="0" y="36" font-family='Inter' font-weight="800" font-size="36" fill="#052028" opacity="0.95">CMDESIGN</text>
-        </g>
-      </svg>
-    `;
-
-    function setLogo(type){
-      logoCanvas.innerHTML = (type === 'flat') ? svgFlat : (type === 'tech') ? svgTech : svgCreative;
-      // active class updates
-      btnFlat.classList.toggle('active', type === 'flat');
-      btnTech.classList.toggle('active', type === 'tech');
-      btnCreative.classList.toggle('active', type === 'creative');
-    }
-    btnFlat.addEventListener('click', ()=> setLogo('flat'));
-    btnTech.addEventListener('click', ()=> setLogo('tech'));
-    btnCreative.addEventListener('click', ()=> setLogo('creative'));
-    // default
-    setLogo('flat');
-
-    /* DEMO functions */
-    function generateDemo(){
-      const sector = document.getElementById('demo-sector').value || 'servicio';
-      const key = (document.getElementById('demo-key').value || 'tu negocio').trim();
-      const title = `${capitalize(sector)} para ${capitalize(key)} que vende más`;
-      const sub = `Landing optimizada para convertir clientes en ${key}. Plantilla lista para desplegar.`;
-      document.getElementById('demo-title-out').textContent = title;
-      document.getElementById('demo-sub-out').textContent = sub;
-    }
-    function copyDemo(){
-      const t = document.getElementById('demo-title-out').textContent + "\n\n" + document.getElementById('demo-sub-out').textContent;
-      navigator.clipboard?.writeText(t).then(()=> alert('Texto copiado ✅'));
-    }
-    function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-    /* Contact prefill */
-    function prefillDemo(){
-      document.querySelector('input[name="name"]').value = 'Interesado CMDESIGN';
-      document.querySelector('input[name="email"]').value = 'info@empresa.test';
-      document.querySelector('textarea[name="message"]').value = 'Quiero integrar cmdTools y una demo del producto. Gracias.';
-      document.querySelector('input[name="message"]').focus?.();
-    }
-
-    /* small accessibility: keyboard shortcuts for logos */
-    document.addEventListener('keydown', (e) => {
-      if(e.key === '1') setLogo('flat');
-      if(e.key === '2') setLogo('tech');
-      if(e.key === '3') setLogo('creative');
+  // subtle micro-parallax for hero mock (on mouse move)
+  const mock = document.getElementById('logoMock');
+  if(mock){
+    document.addEventListener('mousemove', (e) => {
+      const rect = mock.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      mock.style.transform = `translate3d(${x*8}px, ${y*6}px, 0) rotate(${x*3}deg)`;
     });
+    document.addEventListener('mouseleave', () => { mock.style.transform='translate3d(0,0,0)'; });
+  }
 
-    // On load: simple analytics placeholder (console)
-    console.info('CMDESIGN landing loaded — logos (1=flat,2=tech,3=creative) — demo generator ready.');
-  </script>
+  // accessibility: keyboard focus visible
+  document.addEventListener('keyup', (e) => {
+    if(e.key==='Tab') document.documentElement.style.scrollBehavior='smooth';
+  });
+
+  // initial reveal trigger for hero parts
+  setTimeout(()=> {
+    document.getElementById('hero-left')?.classList.add('visible');
+    document.getElementById('hero-right')?.classList.add('visible');
+  }, 200);
+</script>
 </body>
 </html>
